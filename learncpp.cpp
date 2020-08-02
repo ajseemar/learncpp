@@ -1,12 +1,23 @@
 // learncpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
+#include "io.h"
+
+int add(int a, int b);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    int a{readNumber()};
+    int b{readNumber()};
+
+    writeAnswer(add(a, b));
+
     return 0;
+}
+
+int add(int a, int b)
+{
+    return a + b;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
