@@ -3,9 +3,20 @@
 
 #include <iostream>
 
+int doubleNumber(int n)
+{
+    return n * 2;
+}
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Enter a number: ";
+
+    int num{};
+    std::cin >> num;
+
+    std::cout << "Double " << num << " is: " << doubleNumber(num) << '\n';
+
     return 0;
 }
 
