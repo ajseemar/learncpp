@@ -1,21 +1,26 @@
-// learncpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#include <bitset>
 #include <iostream>
+
+// "rotl" stands for "rotate left"
+std::bitset<4> rotl(std::bitset<4> bits)
+{
+	if ((bits & std::bitset<4> { 0b1000 }) == std::bitset<4> { 0b1000 })
+	{
+		bits <<= 1;
+		return bits | std::bitset<4> { 0b0001 };
+	}
+
+	bits <<= 1;
+	return bits;
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
-    return 0;
+	std::bitset<4> bits1{ 0b0001 };
+	std::cout << rotl(bits1) << '\n';
+
+	std::bitset<4> bits2{ 0b1001 };
+	std::cout << rotl(bits2) << '\n';
+
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
