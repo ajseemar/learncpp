@@ -2,20 +2,110 @@
 //
 
 #include <iostream>
+#include <random>
+
+bool play_hilo(const int max_num_tries = 7);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Would you like to play a game of hi-lo (y/n): ";
+
+    char play_game{};
+    while (1)
+    {
+        std::cin >> play_game;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(37626, '\n');
+        }
+        else
+        {
+            std::cin.ignore(37626, '\n');
+            break;
+        }
+    }
+
+    bool is_playing{ play_game == 'y' };
+    while (play_hilo()) {}
+
     return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+bool play_hilo(const int max_num_tries)
+{
+    std::random_device rnd;
+    std::mt19937 rng(rnd());
+    std::uniform_int_distribution<int> rand(1, 100);
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    int num_to_guess = rand(rng);
+    int guess = -1;
+    int num_tries = 0;
+
+    std::cout << "Let's play a game.  I'm thinking of a number between 1 and 100.  You have 7 tries to guess what it is.\n";
+    std::cout << "(hint..secret num is [" << num_to_guess << "] ;) good luck!)\n";
+
+    while (num_tries < max_num_tries)
+    {
+        std::cout << "Guess #" << num_tries++ + 1 << ": ";
+
+        while (1)
+        {
+            std::cin >> guess;
+
+            if (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(37626, '\n');
+            }
+            else 
+            {
+                std::cin.ignore(37626, '\n');
+                break;
+            }
+        }
+
+        if (guess == num_to_guess)
+        {
+            std::cout << "Congratulations! You Win!\n";
+            goto end_game;
+        }
+        else if (guess < num_to_guess)
+        {
+            std::cout << "Your guess is too low.\n";
+        }
+        else
+        {
+            std::cout << "Your guess is too high\n";
+        }
+    }
+
+    std::cout << "Sorry, you lose :( The correct number was " << num_to_guess << ".\n";
+    goto end_game;
+
+
+end_game:
+
+    while (1)
+    {
+        std::cout << "Would you like to play again (y/n): ";
+
+        char play_game{};
+        std::cin >> play_game;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(37626, '\n');
+        }
+        else
+        {
+            std::cin.ignore(37626, '\n');
+            
+            if (play_game == 'y') return true;
+            if (play_game == 'n') return false;
+        }
+    }
+
+}
